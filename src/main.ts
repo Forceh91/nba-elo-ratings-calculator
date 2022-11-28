@@ -8,7 +8,7 @@ function get2022Schedule() {
   let schedule: NBASchedule | undefined;
 
   axios
-    .get("https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json", {
+    .get("https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_2.json", {
       headers: {
         "Accept-Encoding": "application/json",
       },
@@ -17,15 +17,8 @@ function get2022Schedule() {
       const data = resp.data;
       if (!data) return;
 
-      const leagueSchedule = data.leagueSchedule;
-      const scheduledGameDates = leagueSchedule?.gameDates;
-      const scheduledGames = scheduledGameDates.reduce((acc: Array<NBAGame>, curr: any) => {
-        acc.push(...curr.games);
-        return acc;
-      }, []);
-
       // create the schedule
-      schedule = new NBASchedule(leagueSchedule.seasonYear, leagueSchedule.leagueId, scheduledGames);
+      schedule = new NBASchedule(data.leagueSchedule);
 
       // create elo rating calculator
       const eloRating = new EloRatings(schedule.teams, schedule.completedRegularSeasonGames);

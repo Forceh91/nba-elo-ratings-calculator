@@ -2,15 +2,24 @@
 
 import NBAGame from "../game/nbagame";
 import NBATeam from "../nbateam/nbateam";
-import { calculateEloChange } from "../elorating/elorating";
 import NBAGameTeam from "../game/nbagameteam";
 
 export default class NBASchedule {
-  private _games: Array<NBAGame>;
+  private seasonYear: string = "";
+  private leagueId: String = "";
+  private gameDates: Array<NBAGame> = [];
+
+  private _games: Array<NBAGame> = [];
   private _teams: Array<NBATeam> = [];
 
-  constructor(private _seasonYear: string, private _leagueID: string, scheduledGames: Array<NBAGame>) {
-    this._games = scheduledGames;
+  constructor(data: Partial<NBASchedule>) {
+    Object.assign(this, data);
+
+    this._games = this.gameDates.reduce((acc: Array<NBAGame>, curr: any) => {
+      acc.push(...curr.games);
+      return acc;
+    }, this._games);
+
     this.generateTeamsFromSchedule();
   }
 
