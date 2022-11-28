@@ -1,12 +1,11 @@
 import NBASchedule from "./schedule/schedule";
-import { createNBASchedule } from "./schedulecontroller";
+import { createNBASchedule } from "./schedule/schedulecontroller";
 import axios, { AxiosResponse } from "axios";
-import { EloRatings } from "./elorating/elorating";
 import { setupAPI } from "./api/main";
+import { createEloRatings } from "./elorating/eloratingcontroller";
+import { EloRatings } from "./elorating/elorating";
 
 function get2022Schedule() {
-  let schedule: NBASchedule | undefined;
-
   axios
     .get("https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_2.json", {
       headers: {
@@ -18,10 +17,10 @@ function get2022Schedule() {
       if (!data) return;
 
       // create the schedule
-      schedule = createNBASchedule(data.leagueSchedule);
+      const schedule: NBASchedule = createNBASchedule(data.leagueSchedule);
 
       // create elo rating calculator
-      const eloRating = new EloRatings(schedule.teams, schedule.completedRegularSeasonGames);
+      const eloRating: EloRatings = createEloRatings(schedule?.teams, schedule?.games);
 
       // calculate elo ratings
       eloRating.calculateEloForMatches();

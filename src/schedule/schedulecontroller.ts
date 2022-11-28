@@ -1,4 +1,4 @@
-import NBASchedule from "./schedule/schedule";
+import NBASchedule from "./schedule";
 
 let nbaSchedule: NBASchedule;
 

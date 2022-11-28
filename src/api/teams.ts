@@ -1,7 +1,7 @@
 import express from "express";
 
 import NBASchedule from "../schedule/schedule";
-import { getNBASchedule } from "../schedulecontroller";
+import { getNBASchedule } from "../schedule/schedulecontroller";
 
 const router = express.Router();
 router.get("/", function (req, res) {
