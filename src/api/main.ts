@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import teamsRoutes from "./teams";
+import ratingsRoutes from "./eloratings";
 
 const CORS_OPTIONS = {
   origin: "http://localhost:8080",
@@ -19,6 +20,7 @@ const setupAPI = (): void => {
   // setup express routes
   const router = express.Router();
   router.use("/teams", teamsRoutes);
+  router.use("/ratings", ratingsRoutes);
   api.use("/api/v:version", router);
 
   console.log("API setup complete");

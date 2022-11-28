@@ -48,7 +48,7 @@ export default class NBATeam {
     this._eloRating += byAmount;
   }
 
-  public toJSON(): object {
+  toJSON(): object {
     return {
       id: this._teamID,
       triCode: this._teamTricode,

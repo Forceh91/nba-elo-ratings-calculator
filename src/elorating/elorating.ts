@@ -51,6 +51,10 @@ class EloRatings {
     return this._teams.sort((team1: NBATeam, team2: NBATeam) => team2.eloRating - team1.eloRating);
   }
 
+  public get lowSortedEloRatings(): Array<NBATeam> {
+    return this._teams.sort((team1: NBATeam, team2: NBATeam) => team1.eloRating - team2.eloRating);
+  }
+
   public printEloRatings(): void {
     console.log(
       this._teams.map((team: NBATeam) => ({ id: team.id, team: team.tricode, eloRating: team.roundedEloRating }))
@@ -65,6 +69,13 @@ class EloRatings {
         eloRating: team.roundedEloRating,
       }))
     );
+  }
+
+  public ratingsToJSON(sortRatingsLowToHigh: boolean = false): object {
+    return {
+      completedGames: this._games.length,
+      ratings: !sortRatingsLowToHigh ? this.sortedEloRatings : this.lowSortedEloRatings,
+    };
   }
 }
 
