@@ -20,7 +20,7 @@ function get2022Schedule() {
       const schedule: NBASchedule = createNBASchedule(data.leagueSchedule);
 
       // create elo rating calculator
-      const eloRating: EloRatings = createEloRatings(schedule?.teams, schedule?.games);
+      const eloRating: EloRatings = createEloRatings(schedule?.teams, schedule?.completedRegularSeasonGames);
 
       // calculate elo ratings
       eloRating.calculateEloForMatches();
