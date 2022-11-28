@@ -4,7 +4,12 @@ export default class NBATeam {
   private _eloRating: number = DEFAULT_ELO_RATING;
   private _eloRatingHistory: Array<number> = [];
 
-  constructor(private _teamID: number, private _teamName: string, private _teamTricode: string) {}
+  constructor(
+    private _teamID: number,
+    private _teamName: string,
+    private _teamTricode: string,
+    private _teamCity: string
+  ) {}
 
   public get id() {
     return this._teamID;
@@ -16,6 +21,14 @@ export default class NBATeam {
 
   public get tricode() {
     return this._teamTricode;
+  }
+
+  public get city() {
+    return this._teamCity;
+  }
+
+  public get fullName() {
+    return `${this._teamCity} ${this._teamName}`;
   }
 
   public get eloRating() {

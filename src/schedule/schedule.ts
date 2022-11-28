@@ -32,7 +32,7 @@ export default class NBASchedule {
 
   private addTeam(team: NBAGameTeam): void {
     if (!this.doesTeamExist(team.id)) {
-      this._teams.push(new NBATeam(team.id, team.name, team.triCode));
+      this._teams.push(new NBATeam(team.id, team.name, team.triCode, team.city));
     }
   }
 
