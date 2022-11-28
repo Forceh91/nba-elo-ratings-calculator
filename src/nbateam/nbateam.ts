@@ -47,4 +47,17 @@ export default class NBATeam {
     if (trackChange) this._eloRatingHistory.push(this._eloRating);
     this._eloRating += byAmount;
   }
+
+  public toJSON(): object {
+    return {
+      id: this._teamID,
+      triCode: this._teamTricode,
+      city: this._teamCity,
+      name: this._teamName,
+      fullName: this.fullName,
+      eloRating: this.eloRating,
+      roundedEloRating: this.roundedEloRating,
+      eloRatingHistory: [...this._eloRatingHistory, this.eloRating],
+    };
+  }
 }
