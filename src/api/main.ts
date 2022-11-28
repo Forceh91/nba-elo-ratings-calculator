@@ -17,7 +17,9 @@ const setupAPI = (): void => {
   api.listen(PORT);
 
   // setup express routes
-  api.use("/api/teams", teamsRoutes);
+  const router = express.Router();
+  router.use("/teams", teamsRoutes);
+  api.use("/api/v:version", router);
 
   console.log("API setup complete");
 };
