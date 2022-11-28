@@ -6,9 +6,8 @@ import { getNBASchedule } from "../schedulecontroller";
 const router = express.Router();
 router.get("/", function (req, res) {
   const schedule: NBASchedule | undefined = getNBASchedule();
-  console.log("Wtf", schedule);
 
-  return res.send(schedule?.teams);
+  return res.send(schedule?.teams?.map((team) => team.toJSON()));
 });
 
 export default router;
