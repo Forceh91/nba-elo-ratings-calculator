@@ -14,6 +14,8 @@ function EloRatings(props: iEloRatings) {
   const { season, games, teams } = props || {};
   if (!teams.length) return <div>No teams are available</div>;
 
+  const leader = teams[0];
+
   return (
     <div className={elostyles.container}>
       <h3>{season} Season</h3>
@@ -26,6 +28,7 @@ function EloRatings(props: iEloRatings) {
           <col style={{ width: 20 }} />
           <col style={{ width: 120 }} />
           <col style={{ width: 50 }} />
+          <col style={{ width: 50 }} />
         </colgroup>
         <thead>
           <tr>
@@ -34,12 +37,13 @@ function EloRatings(props: iEloRatings) {
             <th>Team</th>
             <th className={styles.right}>Games</th>
             <th className={styles.right}>Rating</th>
+            <th className={styles.right}>Elo Diff</th>
             <th className={styles.right}>Avg +/-</th>
           </tr>
         </thead>
         <tbody>
           {teams.map((team: NBATeam, ix: number) => (
-            <TeamRating pos={ix + 1} team={team} key={team.id}></TeamRating>
+            <TeamRating pos={ix + 1} team={team} leader={leader} key={team.id}></TeamRating>
           ))}
         </tbody>
       </table>

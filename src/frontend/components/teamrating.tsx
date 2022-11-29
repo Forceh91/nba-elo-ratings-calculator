@@ -4,11 +4,12 @@ import styles from "./teamrating.module.scss";
 
 interface iTeamRating {
   pos: number;
+  leader: Partial<NBATeam>;
   team: Partial<NBATeam>;
 }
 
 function TeamRating(props: iTeamRating) {
-  const { pos, team } = props;
+  const { pos, leader, team } = props;
 
   const getAverageEloPerGame = (): number => {
     if (!team.eloRatingHistory || !team.eloRatingHistory.length) return 0.0;
@@ -27,6 +28,7 @@ function TeamRating(props: iTeamRating) {
 
   const avgEloPerGame = getAverageEloPerGame();
   const games = team.eloRatingHistory.length;
+  const gapToLeader = -(leader.roundedEloRating - team.roundedEloRating);
 
   return (
     <tr>
@@ -35,6 +37,7 @@ function TeamRating(props: iTeamRating) {
       <td>{team.fullName}</td>
       <td className={styles.right}>{games}</td>
       <td className={styles.right}>{team.roundedEloRating}</td>
+      <td className={styles.right}>{gapToLeader}</td>
       <td
         className={`${styles.right} ${classNames({
           "table-danger": avgEloPerGame < 0,
