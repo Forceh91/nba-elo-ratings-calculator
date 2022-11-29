@@ -1,8 +1,10 @@
+import HistoricEloGame from "../elorating/historicelogame";
 import { DEFAULT_ELO_RATING } from "../elorating/elorating";
 
 export default class NBATeam {
   private _eloRating: number = DEFAULT_ELO_RATING;
   private _eloRatingHistory: Array<number> = [];
+  private _historicEloGames: Array<HistoricEloGame> = [];
 
   constructor(
     private _teamID: number,
@@ -59,13 +61,30 @@ export default class NBATeam {
     return Number((changeTotal / this.eloRatingHistory.length).toFixed(1));
   }
 
+  public get history(): Array<HistoricEloGame> {
+    return this._historicEloGames;
+  }
+
   public expectedOutcomeOnOpponent(opponent: NBATeam) {
     return 1.0 / (1 + Math.pow(10, (opponent.eloRating - this._eloRating) / 400.0));
   }
 
-  public changeEloRating(byAmount: number, trackChange: boolean) {
+  public changeEloRating(gameID: string, byAmount: number, trackChange: boolean, opponent: NBATeam) {
+    const eloBeforeGame = this._eloRating;
+
     if (trackChange) this._eloRatingHistory.push(this._eloRating);
     this._eloRating += byAmount;
+
+    // track games they did
+    const historicEloGame: HistoricEloGame = new HistoricEloGame(
+      gameID,
+      eloBeforeGame,
+      this._eloRating,
+      opponent.id,
+      opponent.eloRating
+    );
+
+    this._historicEloGames.push(historicEloGame);
   }
 
   toJSON(): object {
@@ -79,6 +98,7 @@ export default class NBATeam {
       roundedEloRating: this.roundedEloRating,
       eloRatingHistory: this.eloRatingHistory,
       eloRatingChangeAverage: this.eloRatingChangeAverage,
+      history: this._historicEloGames,
     };
   }
 }

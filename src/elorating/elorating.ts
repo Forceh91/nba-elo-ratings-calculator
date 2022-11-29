@@ -39,11 +39,11 @@ class EloRatings {
 
       // calculate the change amounts for home
       const homeTeamChange = calculateEloChange(homeTeamWinChance, homeResult);
-      homeTeam.changeEloRating(homeTeamChange, true);
+      homeTeam.changeEloRating(game.gameId, homeTeamChange, true, versusTeam);
 
       // calculate the change amounts for away
       const versusTeamChange = calculateEloChange(versusTeamWinChance, versusResult);
-      versusTeam.changeEloRating(versusTeamChange, true);
+      versusTeam.changeEloRating(game.gameId, versusTeamChange, true, homeTeam);
     });
   }
 
