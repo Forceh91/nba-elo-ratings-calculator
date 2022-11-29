@@ -39,6 +39,10 @@ export default class NBATeam {
     return Math.round(this._eloRating);
   }
 
+  public get eloRatingHistory() {
+    return [...this._eloRatingHistory, this.eloRating];
+  }
+
   public expectedOutcomeOnOpponent(opponent: NBATeam) {
     return 1.0 / (1 + Math.pow(10, (opponent.eloRating - this._eloRating) / 400.0));
   }
@@ -57,7 +61,7 @@ export default class NBATeam {
       fullName: this.fullName,
       eloRating: this.eloRating,
       roundedEloRating: this.roundedEloRating,
-      eloRatingHistory: [...this._eloRatingHistory, this.eloRating],
+      eloRatingHistory: this.eloRatingHistory,
     };
   }
 }
