@@ -51,7 +51,7 @@ export default class NBATeam {
   toJSON(): object {
     return {
       id: this._teamID,
-      triCode: this._teamTricode,
+      tricode: this._teamTricode,
       city: this._teamCity,
       name: this._teamName,
       fullName: this.fullName,

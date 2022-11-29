@@ -5,7 +5,7 @@ import teamsRoutes from "./teams";
 import ratingsRoutes from "./eloratings";
 
 const CORS_OPTIONS = {
-  origin: "http://localhost:8080",
+  origin: "http://localhost:3000",
   optionsSuccessStatus: 200,
 };
 
