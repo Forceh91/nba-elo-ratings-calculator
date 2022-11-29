@@ -10,4 +10,12 @@ router.get("/", function (req, res) {
   return res.send(schedule?.teams?.map((team) => team.toJSON()));
 });
 
+router.get("/:teamID", function (req, res) {
+  const schedule: NBASchedule | undefined = getNBASchedule();
+  const team = schedule?.getTeamFromID(Number(req.params.teamID));
+  if (!team) res.sendStatus(404);
+
+  return res.send(team);
+});
+
 export default router;
