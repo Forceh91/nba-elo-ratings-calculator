@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Link from "next/link";
 import NBATeam from "../../nbateam/nbateam";
 import styles from "./teamrating.module.scss";
 
@@ -19,7 +20,9 @@ function TeamRating(props: iTeamRating) {
     <tr>
       <td className={styles.right}>{pos}</td>
       <td>{team.tricode}</td>
-      <td>{team.fullName}</td>
+      <td>
+        <Link href={`/team/${team.id}`}>{team.fullName}</Link>
+      </td>
       <td className={styles.right}>{games}</td>
       <td className={styles.right}>{team.roundedEloRating}</td>
       <td className={styles.right}>{gapToLeader}</td>

@@ -1,0 +1,35 @@
+#team_profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#team_name {
+  text-align: center;
+}
+
+#elorating {
+  margin-bottom: 20px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  div {
+    &:first-child {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    &:last-child {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+#back_link {
+  margin-top: 20px;
+  text-align: center;
+}

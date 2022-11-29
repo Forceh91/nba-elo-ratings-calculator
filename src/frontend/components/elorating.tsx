@@ -17,7 +17,7 @@ function EloRatings(props: iEloRatings) {
   const leader = teams[0];
 
   return (
-    <div className={elostyles.container}>
+    <div className="padded-container">
       <div className={elostyles.title}>{season} Season</div>
       <div className={elostyles.title}>Completed Games: {games}</div>
       <table className={"table table-striped " + elostyles.table}>
