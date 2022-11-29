@@ -43,6 +43,21 @@ export default class NBATeam {
     return [...this._eloRatingHistory, this.eloRating];
   }
 
+  public get eloRatingChangeAverage(): number {
+    if (!this.eloRatingHistory || !this.eloRatingHistory.length) return 0.0;
+
+    // use the history to figure out the average change in elo per game
+    let changeTotal: number = this.eloRatingHistory.reduce((acc: number, curr: number, ix: number) => {
+      if (!ix) return acc;
+
+      // figure out the diff between this elo and the previous one
+      const change = curr - this.eloRatingHistory[ix - 1];
+      return acc + change;
+    }, 0.0);
+
+    return Number((changeTotal / this.eloRatingHistory.length).toFixed(1));
+  }
+
   public expectedOutcomeOnOpponent(opponent: NBATeam) {
     return 1.0 / (1 + Math.pow(10, (opponent.eloRating - this._eloRating) / 400.0));
   }
@@ -62,6 +77,7 @@ export default class NBATeam {
       eloRating: this.eloRating,
       roundedEloRating: this.roundedEloRating,
       eloRatingHistory: this.eloRatingHistory,
+      eloRatingChangeAverage: this.eloRatingChangeAverage,
     };
   }
 }
