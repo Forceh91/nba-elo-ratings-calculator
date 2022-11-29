@@ -44,6 +44,10 @@ export default class NBASchedule {
     return this._teams.find((team: NBATeam) => team.id === teamID);
   }
 
+  public get season(): string {
+    return this.seasonYear;
+  }
+
   public get games(): Array<NBAGame> {
     return this._games;
   }

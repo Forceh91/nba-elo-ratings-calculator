@@ -22,7 +22,7 @@ function EloRatings() {
   const teams: Array<NBATeam> = data?.ratings;
   return (
     <div className="container">
-      <EloRatingsTable games={data.completedGames} teams={teams} />
+      <EloRatingsTable season={data.season} games={data.completedGames} teams={teams} />
     </div>
   );
 }

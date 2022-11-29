@@ -5,17 +5,19 @@ import elostyles from "./elorating.module.scss";
 import styles from "./teamrating.module.scss";
 
 interface iEloRatings {
+  season: string;
   games: number;
   teams: Array<NBATeam>;
 }
 
 function EloRatings(props: iEloRatings) {
-  const { games, teams } = props || {};
+  const { season, games, teams } = props || {};
   if (!teams.length) return <div>No teams are available</div>;
 
   return (
     <div className={elostyles.container}>
-      <h3>Completed Games: {games}</h3>
+      <h3>{season} Season</h3>
+      <h4>Completed Games: {games}</h4>
       <table className={"table table-striped " + elostyles.table}>
         <colgroup>
           <col style={{ width: 20 }} />
