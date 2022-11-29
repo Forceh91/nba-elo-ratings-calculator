@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import NBATeam from "../../nbateam/nbateam";
 import styles from "./teamrating.module.scss";
 
@@ -9,8 +10,8 @@ interface iTeamRating {
 function TeamRating(props: iTeamRating) {
   const { pos, team } = props;
 
-  const getAverageEloPerGame = (): string => {
-    if (!team.eloRatingHistory || !team.eloRatingHistory.length) return "0";
+  const getAverageEloPerGame = (): number => {
+    if (!team.eloRatingHistory || !team.eloRatingHistory.length) return 0.0;
 
     // use the history to figure out the average change in elo per game
     let changeTotal: number = team.eloRatingHistory.reduce((acc: number, curr: number, ix: number) => {
@@ -19,10 +20,12 @@ function TeamRating(props: iTeamRating) {
       // figure out the diff between this elo and the previous one
       const change = curr - team.eloRatingHistory[ix - 1];
       return acc + change;
-    }, 0);
+    }, 0.0);
 
-    return (changeTotal / team.eloRatingHistory.length).toFixed(1);
+    return Number((changeTotal / team.eloRatingHistory.length).toFixed(1));
   };
+
+  const avgEloPerGame = getAverageEloPerGame();
 
   return (
     <tr>
@@ -30,7 +33,14 @@ function TeamRating(props: iTeamRating) {
       <td>{team.tricode}</td>
       <td>{team.fullName}</td>
       <td className={styles.right}>{team.roundedEloRating}</td>
-      <td className={styles.right}>{getAverageEloPerGame()}</td>
+      <td
+        className={`${styles.right} ${classNames({
+          "table-danger": avgEloPerGame < 0,
+          "table-success": avgEloPerGame > 0,
+        })}`}
+      >
+        {avgEloPerGame.toFixed(1)}
+      </td>
     </tr>
   );
 }
