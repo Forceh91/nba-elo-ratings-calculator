@@ -18,8 +18,8 @@ function EloRatings(props: iEloRatings) {
 
   return (
     <div className={elostyles.container}>
-      <h3>{season} Season</h3>
-      <h4>Completed Games: {games}</h4>
+      <div className={elostyles.title}>{season} Season</div>
+      <div className={elostyles.title}>Completed Games: {games}</div>
       <table className={"table table-striped " + elostyles.table}>
         <colgroup>
           <col style={{ width: 20 }} />
