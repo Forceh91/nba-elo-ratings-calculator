@@ -44,6 +44,7 @@ export default class NBATeam {
   }
 
   public get eloRatingChangeAverage(): number {
+    // to do: this can be figured out during elo changes rather than when we need the data
     if (!this.eloRatingHistory || !this.eloRatingHistory.length) return 0.0;
 
     // use the history to figure out the average change in elo per game

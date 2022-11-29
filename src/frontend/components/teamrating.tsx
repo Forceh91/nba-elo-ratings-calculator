@@ -11,22 +11,7 @@ interface iTeamRating {
 function TeamRating(props: iTeamRating) {
   const { pos, leader, team } = props;
 
-  const getAverageEloPerGame = (): number => {
-    if (!team.eloRatingHistory || !team.eloRatingHistory.length) return 0.0;
-
-    // use the history to figure out the average change in elo per game
-    let changeTotal: number = team.eloRatingHistory.reduce((acc: number, curr: number, ix: number) => {
-      if (!ix) return acc;
-
-      // figure out the diff between this elo and the previous one
-      const change = curr - team.eloRatingHistory[ix - 1];
-      return acc + change;
-    }, 0.0);
-
-    return Number((changeTotal / team.eloRatingHistory.length).toFixed(1));
-  };
-
-  const avgEloPerGame = getAverageEloPerGame();
+  const avgEloPerGame = team.eloRatingChangeAverage;
   const games = team.eloRatingHistory.length;
   const gapToLeader = -(leader.roundedEloRating - team.roundedEloRating);
 
