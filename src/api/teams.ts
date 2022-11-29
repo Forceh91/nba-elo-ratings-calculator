@@ -12,10 +12,18 @@ router.get("/", function (req, res) {
 
 router.get("/:teamID", function (req, res) {
   const schedule: NBASchedule | undefined = getNBASchedule();
-  const team = schedule?.getTeamFromID(Number(req.params.teamID));
-  if (!team) res.sendStatus(404);
+  const teamIDs = req.params.teamID.split(",");
+  if (teamIDs.length === 1) {
+    const team = schedule?.getTeamFromID(Number(req.params.teamID));
+    if (!team) return res.sendStatus(404);
 
-  return res.send(team);
+    return res.send(team);
+  } else {
+    const teams = teamIDs.map((teamID: string) => schedule?.getTeamFromID(Number(teamID)));
+    if (!teams || !teams.length) return res.sendStatus(404);
+
+    return res.send(teams);
+  }
 });
 
 export default router;
