@@ -27,7 +27,7 @@ function TeamProfile(props: Partial<NBATeam>) {
   };
 
   const games = props.eloRatingHistory.length || 0;
-  const last5Games = props.history.slice(-5);
+  const last5Games = props.history.slice(-5)?.reverse();
 
   return (
     <div id={style.team_profile}>
@@ -42,8 +42,8 @@ function TeamProfile(props: Partial<NBATeam>) {
         <Stat title="Average +/-" data={props.eloRatingChangeAverage.toFixed(1)}></Stat>
       </div>
 
-      <div className="row col-md-12">
-        <h3>Last 5 Games</h3>
+      <div id={style.game_history}>
+        <h3 id={style.game_history_title}>Last 5 Games</h3>
         <TeamHistoricGames games={last5Games} />
       </div>
 
