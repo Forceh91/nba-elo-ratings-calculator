@@ -23,6 +23,7 @@ function EloRatings(props: iEloRatings) {
           <col style={{ width: 20 }} />
           <col style={{ width: 50 }} />
           <col style={{ width: 200 }} />
+          <col style={{ width: 20 }} />
           <col style={{ width: 120 }} />
           <col style={{ width: 50 }} />
         </colgroup>
@@ -31,6 +32,7 @@ function EloRatings(props: iEloRatings) {
             <th className={styles.right}>#</th>
             <th></th>
             <th>Team</th>
+            <th className={styles.right}>Games</th>
             <th className={styles.right}>Rating</th>
             <th className={styles.right}>Avg +/-</th>
           </tr>

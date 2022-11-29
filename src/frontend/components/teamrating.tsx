@@ -26,12 +26,14 @@ function TeamRating(props: iTeamRating) {
   };
 
   const avgEloPerGame = getAverageEloPerGame();
+  const games = team.eloRatingHistory.length;
 
   return (
     <tr>
       <td className={styles.right}>{pos}</td>
       <td>{team.tricode}</td>
       <td>{team.fullName}</td>
+      <td className={styles.right}>{games}</td>
       <td className={styles.right}>{team.roundedEloRating}</td>
       <td
         className={`${styles.right} ${classNames({
