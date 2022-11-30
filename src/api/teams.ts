@@ -17,6 +17,8 @@ router.get("/:teamID", function (req, res) {
     const team = schedule?.getTeamFromID(Number(req.params.teamID));
     if (!team) return res.sendStatus(404);
 
+    team.setNextGame(schedule?.getNextGameForTeam(team.id));
+
     return res.send(team);
   } else {
     const teams = teamIDs.map((teamID: string) => schedule?.getTeamFromID(Number(teamID)));
