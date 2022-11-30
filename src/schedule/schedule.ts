@@ -4,6 +4,7 @@ import NBAGame from "../game/nbagame";
 import NBATeam from "../nbateam/nbateam";
 import NBAGameTeam from "../game/nbagameteam";
 import NBATeamNextGame from "../nbateam/nbateamnextgame";
+import { calculateEloChange } from "../elorating/elorating";
 
 export default class NBASchedule {
   private seasonYear: string = "";
@@ -46,17 +47,28 @@ export default class NBASchedule {
   }
 
   public getNextGameForTeam(teamID: number): NBATeamNextGame | undefined {
+    const team: NBATeam = this.getTeamFromID(teamID);
+    if (!team) return;
+
     let game: NBAGame = this.upcomingRegularSeasonGames.find(
-      (game: NBAGame) => new NBAGameTeam(game.homeTeam)?.id === teamID || new NBAGameTeam(game.awayTeam)?.id === teamID
+      (game: NBAGame) =>
+        new NBAGameTeam(game.homeTeam)?.id === team.id || new NBAGameTeam(game.awayTeam)?.id === team.id
     );
 
     game = { ...game, awayTeam: new NBAGameTeam(game.awayTeam), homeTeam: new NBAGameTeam(game.homeTeam) };
     if (!game) return;
 
-    const isHome = game.homeTeam.id === teamID;
+    const isHome = game.homeTeam.id === team.id;
+    const opponent: NBATeam = isHome ? this.getTeamFromID(game.awayTeam.id) : this.getTeamFromID(game.homeTeam.id);
+    const expectedOutcome: number = team.expectedOutcomeOnOpponent(opponent);
     return new NBATeamNextGame(
       game.gameId,
-      isHome ? this.getTeamFromID(game.awayTeam.id) : this.getTeamFromID(game.homeTeam.id)
+      opponent.id,
+      opponent.fullName,
+      opponent.tricode,
+      opponent.eloRating,
+      expectedOutcome,
+      calculateEloChange(expectedOutcome, 1)
     );
   }
 
