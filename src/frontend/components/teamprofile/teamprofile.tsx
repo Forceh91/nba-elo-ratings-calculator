@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NBATeamNextGame from "../../../nbateam/nbateamnextgame";
 import NBATeam from "../../../nbateam/nbateam";
 import TeamHistoricGames from "./teamhistoricgames";
 import style from "./teamprofile.module.scss";
@@ -16,6 +17,22 @@ function TeamProfile(props: Partial<NBATeam>) {
         <div>{title}</div>
         <div>{data}</div>
       </div>
+    );
+  };
+
+  const TeamNextGame = (props: NBATeamNextGame) => {
+    const { opponent, winChance, potentialGain } = props;
+    const { teamID, fullName, triCode, rating }: any = opponent;
+
+    return (
+      <>
+        <div>
+          {fullName} ({triCode}) - {rating.toFixed(2)}
+        </div>
+        <div>
+          <b>{winChance.toFixed(2)}%</b> chance to gain <b>{potentialGain.toFixed(2)} Elo</b>
+        </div>
+      </>
     );
   };
 
@@ -40,6 +57,11 @@ function TeamProfile(props: Partial<NBATeam>) {
         <Stat title="Games" data={games}></Stat>
         <Stat title="Last Game +/-" data={lastGameEloChange()}></Stat>
         <Stat title="Average +/-" data={props.eloRatingChangeAverage.toFixed(1)}></Stat>
+      </div>
+
+      <div id={style.next_game}>
+        <h3 id={style.next_game_title}>Next Game</h3>
+        <TeamNextGame {...props.nextGame} />
       </div>
 
       <div id={style.game_history}>
