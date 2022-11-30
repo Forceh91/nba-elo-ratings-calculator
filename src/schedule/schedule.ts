@@ -3,6 +3,7 @@
 import NBAGame from "../game/nbagame";
 import NBATeam from "../nbateam/nbateam";
 import NBAGameTeam from "../game/nbagameteam";
+import NBATeamNextGame from "../nbateam/nbateamnextgame";
 
 export default class NBASchedule {
   private seasonYear: string = "";
@@ -44,6 +45,21 @@ export default class NBASchedule {
     return this._teams.find((team: NBATeam) => team.id === teamID);
   }
 
+  public getNextGameForTeam(teamID: number): NBATeamNextGame | undefined {
+    let game: NBAGame = this.upcomingRegularSeasonGames.find(
+      (game: NBAGame) => new NBAGameTeam(game.homeTeam)?.id === teamID || new NBAGameTeam(game.awayTeam)?.id === teamID
+    );
+
+    game = { ...game, awayTeam: new NBAGameTeam(game.awayTeam), homeTeam: new NBAGameTeam(game.homeTeam) };
+    if (!game) return;
+
+    const isHome = game.homeTeam.id === teamID;
+    return new NBATeamNextGame(
+      game.gameId,
+      isHome ? this.getTeamFromID(game.awayTeam.id) : this.getTeamFromID(game.homeTeam.id)
+    );
+  }
+
   public get season(): string {
     return this.seasonYear;
   }
@@ -63,6 +79,12 @@ export default class NBASchedule {
 
   public get completedRegularSeasonGames(): Array<NBAGame> {
     return this.regularSeasonGames.filter((game: NBAGame) => game.gameStatusText === "Final");
+  }
+
+  public get upcomingRegularSeasonGames(): Array<NBAGame> {
+    return this.regularSeasonGames
+      .slice(this.completedRegularSeasonGames.length)
+      .filter((game: NBAGame) => game.gameStatus === 1);
   }
 
   public get teams(): Array<NBATeam> {
