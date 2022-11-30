@@ -1,10 +1,12 @@
 import HistoricEloGame from "../elorating/historicelogame";
 import { DEFAULT_ELO_RATING } from "../elorating/elorating";
+import NBATeamNextGame from "./nbateamnextgame";
 
 export default class NBATeam {
   private _eloRating: number = DEFAULT_ELO_RATING;
   private _eloRatingHistory: Array<number> = [];
   private _historicEloGames: Array<HistoricEloGame> = [];
+  private _nextGame: NBATeamNextGame | null = null;
 
   constructor(
     private _teamID: number,
@@ -43,6 +45,10 @@ export default class NBATeam {
 
   public get eloRatingHistory() {
     return [...this._eloRatingHistory, this.eloRating];
+  }
+
+  public get nextGame() {
+    return this._nextGame;
   }
 
   public get eloRatingChangeAverage(): number {
@@ -87,6 +93,10 @@ export default class NBATeam {
     this._historicEloGames.push(historicEloGame);
   }
 
+  public setNextGame(nextGame: NBATeamNextGame) {
+    this._nextGame = nextGame;
+  }
+
   toJSON(): object {
     return {
       id: this._teamID,
@@ -99,6 +109,7 @@ export default class NBATeam {
       eloRatingHistory: this.eloRatingHistory,
       eloRatingChangeAverage: this.eloRatingChangeAverage,
       history: this._historicEloGames,
+      nextGame: this.nextGame,
     };
   }
 }
