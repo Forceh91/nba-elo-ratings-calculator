@@ -16,15 +16,17 @@ describe("NBASchedule", () => {
   });
 
   it("getNextGameForTeam: gets the next upcoming game correctly", (done) => {
-    const triCode: string = "TOR";
-    const team: NBATeam | undefined = nbaschedule.teams.find((team: NBATeam) => team.tricode === triCode);
+    const team: NBATeam | undefined = nbaschedule.teams.find((team: NBATeam) => team.tricode === "TOR");
     if (!team) return;
 
     const nextGame: NBATeamNextGame | undefined = nbaschedule.getNextGameForTeam(team?.id);
     if (!nextGame) return;
 
+    const { triCode, fullName }: any = nextGame.opponent;
+
     expect(nextGame.gameID).toBe("0022200318");
-    expect(nextGame.opponent?.tricode).toBe("NOP");
+    expect(triCode).toBe("NOP");
+    expect(fullName).toBe("New Orleans Pelicans");
     done();
   });
 });
