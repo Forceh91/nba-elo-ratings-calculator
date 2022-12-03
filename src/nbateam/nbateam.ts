@@ -52,6 +52,10 @@ export default class NBATeam {
     return this._nextGame;
   }
 
+  public get games() {
+    return this._eloRatingHistory.length;
+  }
+
   public get wins() {
     return this._wins;
   }
@@ -121,6 +125,7 @@ export default class NBATeam {
       eloRatingHistory: this.eloRatingHistory,
       eloRatingChangeAverage: this.eloRatingChangeAverage,
       history: this._historicEloGames,
+      games: this.games,
       wins: this.wins,
       nextGame: this.nextGame,
     };
