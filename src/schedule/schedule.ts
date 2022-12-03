@@ -96,7 +96,7 @@ export default class NBASchedule {
   public get upcomingRegularSeasonGames(): Array<NBAGame> {
     return this.regularSeasonGames
       .slice(this.completedRegularSeasonGames.length)
-      .filter((game: NBAGame) => game.gameStatus === 1);
+      .filter((game: NBAGame) => game.gameStatusText !== "Final");
   }
 
   public get teams(): Array<NBATeam> {
