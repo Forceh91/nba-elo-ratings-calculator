@@ -7,6 +7,7 @@ export default class NBATeam {
   private _eloRatingHistory: Array<number> = [];
   private _historicEloGames: Array<HistoricEloGame> = [];
   private _nextGame: NBATeamNextGame | null = null;
+  private _wins: number = 0;
 
   constructor(
     private _teamID: number,
@@ -51,6 +52,10 @@ export default class NBATeam {
     return this._nextGame;
   }
 
+  public get wins() {
+    return this._wins;
+  }
+
   public get eloRatingChangeAverage(): number {
     // to do: this can be figured out during elo changes rather than when we need the data
     if (!this.eloRatingHistory || !this.eloRatingHistory.length) return 0.0;
@@ -69,6 +74,10 @@ export default class NBATeam {
 
   public get history(): Array<HistoricEloGame> {
     return this._historicEloGames;
+  }
+
+  private addWin(): void {
+    this._wins++;
   }
 
   public expectedOutcomeOnOpponent(opponent: NBATeam) {
@@ -91,6 +100,9 @@ export default class NBATeam {
     );
 
     this._historicEloGames.push(historicEloGame);
+
+    // increase wins if the elo went up
+    if (byAmount > 0) this.addWin();
   }
 
   public setNextGame(nextGame: NBATeamNextGame) {
@@ -109,6 +121,7 @@ export default class NBATeam {
       eloRatingHistory: this.eloRatingHistory,
       eloRatingChangeAverage: this.eloRatingChangeAverage,
       history: this._historicEloGames,
+      wins: this.wins,
       nextGame: this.nextGame,
     };
   }
