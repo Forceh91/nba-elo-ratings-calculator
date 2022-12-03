@@ -86,17 +86,17 @@ export default class NBASchedule {
   }
 
   public get completedGames(): Array<NBAGame> {
-    return this._games.filter((game: NBAGame) => game.gameStatusText === "Final");
+    return this._games.filter((game: NBAGame) => game.gameStatus === 3);
   }
 
   public get completedRegularSeasonGames(): Array<NBAGame> {
-    return this.regularSeasonGames.filter((game: NBAGame) => game.gameStatusText === "Final");
+    return this.regularSeasonGames.filter((game: NBAGame) => game.gameStatus === 3);
   }
 
   public get upcomingRegularSeasonGames(): Array<NBAGame> {
     return this.regularSeasonGames
       .slice(this.completedRegularSeasonGames.length)
-      .filter((game: NBAGame) => game.gameStatusText !== "Final");
+      .filter((game: NBAGame) => game.gameStatus !== 3);
   }
 
   public get teams(): Array<NBATeam> {
