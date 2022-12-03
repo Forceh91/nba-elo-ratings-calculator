@@ -43,8 +43,7 @@ function TeamProfile(props: Partial<NBATeam>) {
     return (diff < 0 ? "" : "+") + diff.toFixed(2);
   };
 
-  const games = props.eloRatingHistory.length || 0;
-  const wins = props.wins;
+  const { games, wins } = props;
   const last5Games = props.history.slice(-5)?.reverse();
 
   return (
