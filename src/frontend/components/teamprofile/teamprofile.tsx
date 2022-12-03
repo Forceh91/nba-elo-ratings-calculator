@@ -13,7 +13,7 @@ function TeamProfile(props: Partial<NBATeam>) {
   const Stat = (props: iStatInterface) => {
     const { title, data } = props;
     return (
-      <div className={`${style.stat} col-md-4`}>
+      <div className={`${style.stat} col-md-3`}>
         <div>{title}</div>
         <div>{data}</div>
       </div>
@@ -44,6 +44,7 @@ function TeamProfile(props: Partial<NBATeam>) {
   };
 
   const games = props.eloRatingHistory.length || 0;
+  const wins = props.wins;
   const last5Games = props.history.slice(-5)?.reverse();
 
   return (
@@ -55,6 +56,7 @@ function TeamProfile(props: Partial<NBATeam>) {
 
       <div className="row col-md-12">
         <Stat title="Games" data={games}></Stat>
+        <Stat title="Wins" data={wins}></Stat>
         <Stat title="Last Game +/-" data={lastGameEloChange()}></Stat>
         <Stat title="Average +/-" data={props.eloRatingChangeAverage.toFixed(1)}></Stat>
       </div>
