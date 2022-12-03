@@ -10,7 +10,8 @@ interface iTeamRating {
 }
 
 function TeamRating(props: iTeamRating) {
-  const { pos, leader, team } = props;
+  const { pos, leader, team } = props || {};
+  const { wins } = team || {};
 
   const avgEloPerGame = team.eloRatingChangeAverage;
   const games = team.eloRatingHistory.length;
@@ -24,6 +25,7 @@ function TeamRating(props: iTeamRating) {
         <Link href={`/team/${team.id}`}>{team.fullName}</Link>
       </td>
       <td className={styles.right}>{games}</td>
+      <td className={styles.right}>{wins}</td>
       <td className={styles.right}>{team.roundedEloRating}</td>
       <td className={styles.right}>{gapToLeader}</td>
       <td

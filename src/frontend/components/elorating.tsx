@@ -36,6 +36,7 @@ function EloRatings(props: iEloRatings) {
             <th></th>
             <th>Team</th>
             <th className={styles.right}>Games</th>
+            <th className={styles.right}>Wins</th>
             <th className={styles.right}>Rating</th>
             <th className={styles.right}>Elo Diff</th>
             <th className={styles.right}>Avg +/-</th>
