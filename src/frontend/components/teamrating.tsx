@@ -11,10 +11,9 @@ interface iTeamRating {
 
 function TeamRating(props: iTeamRating) {
   const { pos, leader, team } = props || {};
-  const { wins } = team || {};
+  const { games, wins } = team || {};
 
   const avgEloPerGame = team.eloRatingChangeAverage;
-  const games = team.eloRatingHistory.length;
   const gapToLeader = -(leader.roundedEloRating - team.roundedEloRating);
 
   return (
