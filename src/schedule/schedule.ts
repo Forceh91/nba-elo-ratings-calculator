@@ -54,9 +54,9 @@ export default class NBASchedule {
       (game: NBAGame) =>
         new NBAGameTeam(game.homeTeam)?.id === team.id || new NBAGameTeam(game.awayTeam)?.id === team.id
     );
+    if (!game) return;
 
     game = { ...game, awayTeam: new NBAGameTeam(game.awayTeam), homeTeam: new NBAGameTeam(game.homeTeam) };
-    if (!game) return;
 
     const isHome = game.homeTeam.id === team.id;
     const opponent: NBATeam = isHome ? this.getTeamFromID(game.awayTeam.id) : this.getTeamFromID(game.homeTeam.id);

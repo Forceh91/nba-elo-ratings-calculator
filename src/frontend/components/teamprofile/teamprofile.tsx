@@ -60,10 +60,12 @@ function TeamProfile(props: Partial<NBATeam>) {
         <Stat title="Average +/-" data={props.eloRatingChangeAverage.toFixed(1)}></Stat>
       </div>
 
-      <div id={style.next_game}>
-        <h3 id={style.next_game_title}>Next Game</h3>
-        <TeamNextGame {...props.nextGame} />
-      </div>
+      {props.nextGame && (
+        <div id={style.next_game}>
+          <h3 id={style.next_game_title}>Next Game</h3>
+          <TeamNextGame {...props.nextGame} />
+        </div>
+      )}
 
       <div id={style.game_history}>
         <h3 id={style.game_history_title}>Last 5 Games</h3>
